@@ -9,9 +9,12 @@ import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.io.IOException;
 
+import static android.R.attr.format;
 import static android.content.ContentValues.TAG;
 
 /** A basic Camera preview class */
@@ -64,6 +67,24 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // set preview size and make any resize, rotate or
         // reformatting changes here
 
+
+
+        //PARAMETRIT TÄHÄN
+
+        // get Camera parameters
+        //Camera.Parameters params = mCamera.getParameters();
+        // set the effect
+        //params.setColorEffect(Camera.Parameters.EFFECT_SEPIA);
+        // set Camera parameters
+       // mCamera.setParameters(params);
+
+
+
+
+
+
+
+
         // start preview with new settings
         try {
             mCamera.setPreviewDisplay(mHolder);
@@ -73,4 +94,33 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }
     }
+
+    public SeekBar ZoomValue;
+    public int ZoomBarValue;
+
+    public void getZoom(){
+        ZoomValue = (SeekBar)findViewById(R.id.seekBar);
+        ZoomValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                ZoomBarValue = ZoomValue.getProgress();
+
+                mCamera.startPreview();
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
 }
+
+
+
