@@ -72,11 +72,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         //PARAMETRIT TÄHÄN
 
         // get Camera parameters
-        //Camera.Parameters params = mCamera.getParameters();
+        Camera.Parameters params = mCamera.getParameters();
         // set the effect
-        //params.setColorEffect(Camera.Parameters.EFFECT_SEPIA);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         // set Camera parameters
-       // mCamera.setParameters(params);
+        mCamera.setParameters(params);
 
 
 
