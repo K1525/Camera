@@ -2,6 +2,7 @@ package com.example.janne.cameraapi;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -31,6 +32,7 @@ import static android.content.ContentValues.TAG;
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 import static com.example.janne.cameraapi.MainActivity.getCameraInstance;
+import static com.example.janne.cameraapi.R.id.flash;
 
 /**
  * Created by Janne on 31.10.2017.
@@ -69,7 +71,7 @@ public class CameraActivity extends Activity {
         }
 
 
-
+        //SET BUTTONS THAT CHANGE CAMERA PARAMETERS HERE!!!
 
         final SeekBar ZoomValue = (SeekBar)findViewById(R.id.seekBar);
         ZoomValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -91,6 +93,50 @@ public class CameraActivity extends Activity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        final ImageButton CameraFlash = (ImageButton) findViewById(flash);
+        CameraFlash.setOnClickListener(new View.OnClickListener(){
+            int flash = 0;
+
+            @Override
+            public void onClick(View v){
+                if(flash == 0){
+                    Camera.Parameters params = mCamera.getParameters();
+                    params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+                    mCamera.setParameters(params);
+                    CameraFlash.setImageResource(R.drawable.ic_flash_on_black_24dp);
+                    flash = 1;
+                }else{
+                    Camera.Parameters params = mCamera.getParameters();
+                    params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                    mCamera.setParameters(params);
+                    CameraFlash.setImageResource(R.drawable.ic_flash_off_black_24dp);
+                    flash = 0;
+                }
+            }
+        });
+
+        final ImageButton HighDynamicRange = (ImageButton) findViewById(R.id.hdr);
+        HighDynamicRange.setOnClickListener(new View.OnClickListener(){
+            int hdr = 0;
+
+            @Override
+            public void onClick(View v){
+                if(hdr == 0){
+                    Camera.Parameters params = mCamera.getParameters();
+                    params.setSceneMode(Camera.Parameters.SCENE_MODE_HDR);
+                    mCamera.setParameters(params);
+                    HighDynamicRange.setImageResource(R.drawable.ic_hdr_on_black_24dp);
+                    hdr = 1;
+                }else{
+                    Camera.Parameters params = mCamera.getParameters();
+                    params.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+                    mCamera.setParameters(params);
+                    HighDynamicRange.setImageResource(R.drawable.ic_hdr_off_black_24dp);
+                    hdr = 0;
+                }
             }
         });
 
