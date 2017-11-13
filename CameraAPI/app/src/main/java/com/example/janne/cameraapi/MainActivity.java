@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /** Check if this device has a camera */
+    /* Check if device has a camera */
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** A safe way to get an instance of the Camera object. */
+    /* Get an instance of the Camera object. */
     public static Camera getCameraInstance(){
         Camera c = null;
         try {

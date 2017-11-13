@@ -64,6 +64,7 @@ public class CameraActivity extends Activity {
         }
         */
 
+        /*Check permmisions to use camera and to write in internal storage*/
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_CAMERA_REQUEST_CODE);
         } else{
@@ -142,6 +143,7 @@ public class CameraActivity extends Activity {
 
     }
 
+    /*Check is permissions were granted*/
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -156,6 +158,7 @@ public class CameraActivity extends Activity {
         }
     }
 
+    /*Get camera instance, start camera preview and listen for capture button*/
     private void start() {
         // Create an instance of Camera
         mCamera = getCameraInstance();
@@ -165,7 +168,7 @@ public class CameraActivity extends Activity {
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
-        // Add a listener to the Capture button
+        // Listener for the Capture button
         ImageButton captureButton = (ImageButton) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -178,6 +181,7 @@ public class CameraActivity extends Activity {
         );
     }
 
+    /*Save picture in file here*/
     private PictureCallback mPicture = new PictureCallback() {
 
         @Override
@@ -206,6 +210,7 @@ public class CameraActivity extends Activity {
 
 
 
+    /*What happens if camera is paused*/
     @Override
     protected void onPause() {
         super.onPause();
@@ -213,6 +218,7 @@ public class CameraActivity extends Activity {
         releaseCamera();              // release the camera immediately on pause event
     }
 
+    /*Release media recorder !!ONLY NEEDED IF APP RECORDS VIDEO!!*/
     private void releaseMediaRecorder(){
         if (mMediaRecorder != null) {
             mMediaRecorder.reset();   // clear recorder configuration
@@ -222,6 +228,7 @@ public class CameraActivity extends Activity {
         }
     }
 
+    /*Release camera*/
     private void releaseCamera(){
         if (mCamera != null){
             mCamera.release();        // release the camera for other applications
@@ -232,22 +239,17 @@ public class CameraActivity extends Activity {
 
 
 
-    /** Create a file Uri for saving an image or video */
+    /* Create a file Uri for saving an image or video */
     private static Uri getOutputMediaFileUri(int type){
         return Uri.fromFile(getOutputMediaFile(type));
     }
 
-    /** Create a File for saving an image or video */
+    /* Create a File for saving an image or video */
     private static File getOutputMediaFile(int type){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
 
-
-
+        /*Get path where images are saved*/
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "KUVIA");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
